@@ -1,6 +1,8 @@
 import 'package:controle_mao_de_obra/data/repositorio.dart';
 import 'package:controle_mao_de_obra/main.dart';
+import 'package:controle_mao_de_obra/ui/tema.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:sqflite/sqflite.dart' as sqflite;
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
@@ -52,6 +54,15 @@ void main() {
 
     expect(find.text('Fearless Marketing LTDA'), findsOneWidget);
     expect(find.text('R\$ 94.348,00'), findsWidgets);
+    expect(
+      tester
+          .renderObject<RenderParagraph>(find.text('Fearless Marketing LTDA'))
+          .text
+          .style
+          ?.color,
+      textoForte,
+      reason: 'nome e valores precisam sair na cor de texto, não invisíveis',
+    );
 
     await tester.tap(find.text('ADICIONAR PAGAMENTO'));
     await tester.pumpAndSettle();

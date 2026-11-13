@@ -25,12 +25,26 @@ ThemeData construirTema() {
     textTheme: base.textTheme
         .apply(bodyColor: textoForte, displayColor: textoForte)
         .copyWith(
-          bodyLarge: const TextStyle(fontSize: 18, height: 1.35),
-          bodyMedium: const TextStyle(fontSize: 17, height: 1.35),
-          titleLarge:
-              const TextStyle(fontSize: 24, fontWeight: FontWeight.w800),
-          titleMedium:
-              const TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
+          bodyLarge: const TextStyle(
+            fontSize: 18,
+            height: 1.35,
+            color: textoForte,
+          ),
+          bodyMedium: const TextStyle(
+            fontSize: 17,
+            height: 1.35,
+            color: textoForte,
+          ),
+          titleLarge: const TextStyle(
+            fontSize: 24,
+            fontWeight: FontWeight.w800,
+            color: textoForte,
+          ),
+          titleMedium: const TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.w700,
+            color: textoForte,
+          ),
         ),
     appBarTheme: const AppBarTheme(
       backgroundColor: azulEscuro,
