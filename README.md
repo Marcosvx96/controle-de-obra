@@ -30,7 +30,12 @@ relatórios são mantidos.
 - **Extras:** apagar pagamento com DESFAZER, aviso quando o pagamento passa do saldo,
   backup em arquivo `.json` e textos grandes com alto contraste.
 
-![Ícone do app](assets/icon/icon.png)
+## Telas do aplicativo
+
+<p align="center">
+  <img src="screenshots/app-inicio.png" width="45%" alt="Tela principal com o resumo do contrato e a tabela de pagamentos">
+  <img src="screenshots/app-relatorios.png" width="45%" alt="Tela de relatórios anteriores com busca">
+</p>
 
 ## Como instalar
 
@@ -90,4 +95,8 @@ desinstalar o app antes.
 
 - Nenhum dado sai do celular. Não há login, servidor ou anúncio.
 - O backup só é enviado se você escolher para onde (WhatsApp, Drive, e-mail...).
-- O repositório é privado e contém apenas código.
+- O repositório contém apenas código: a chave de assinatura do app fica fora do Git.
+
+## Licença
+
+Distribuído sob a licença **MIT** — veja o arquivo [LICENSE](LICENSE).
