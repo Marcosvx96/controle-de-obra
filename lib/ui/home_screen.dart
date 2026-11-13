@@ -453,23 +453,31 @@ class _HomeScreenState extends State<HomeScreen> {
             mainAxisSize: MainAxisSize.min,
             children: [
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Text(
-                    'SUBTOTAL',
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w800,
-                      color: textoFraco,
-                      letterSpacing: 1.2,
+                  const Flexible(
+                    child: Text(
+                      'SUBTOTAL',
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w800,
+                        color: textoFraco,
+                        letterSpacing: 1.2,
+                      ),
                     ),
                   ),
-                  Text(
-                    formatarMoeda(_totalPago),
-                    style: const TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.w800,
-                      color: azulEscuro,
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: FittedBox(
+                      fit: BoxFit.scaleDown,
+                      alignment: Alignment.centerRight,
+                      child: Text(
+                        formatarMoeda(_totalPago),
+                        style: const TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.w800,
+                          color: azulEscuro,
+                        ),
+                      ),
                     ),
                   ),
                 ],

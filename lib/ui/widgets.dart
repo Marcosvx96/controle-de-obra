@@ -191,9 +191,12 @@ class ResumoCard extends StatelessWidget {
             children: [
               const Icon(Icons.event_outlined, size: 19, color: textoFraco),
               const SizedBox(width: 6),
-              Text(
-                'Início em ${formatarData(relatorio.dataInicio)}',
-                style: const TextStyle(fontSize: 16, color: textoFraco),
+              Expanded(
+                child: Text(
+                  'Início em ${formatarData(relatorio.dataInicio)}',
+                  overflow: TextOverflow.ellipsis,
+                  style: const TextStyle(fontSize: 16, color: textoFraco),
+                ),
               ),
             ],
           ),

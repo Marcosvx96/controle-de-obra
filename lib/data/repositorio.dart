@@ -10,10 +10,14 @@ class Banco {
 
   Database? _banco;
 
+  /// Caminho alternativo usado nos testes (banco em memória).
+  static String? caminhoPersonalizado;
+
   Future<Database> get banco async {
     final existente = _banco;
     if (existente != null) return existente;
-    final caminho = p.join(await getDatabasesPath(), 'controle_mao_de_obra.db');
+    final caminho = caminhoPersonalizado ??
+        p.join(await getDatabasesPath(), 'controle_mao_de_obra.db');
     final aberto = await openDatabase(
       caminho,
       version: 1,
