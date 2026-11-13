@@ -33,8 +33,8 @@ relatórios são mantidos.
 ## Telas do aplicativo
 
 <p align="center">
-  <img src="screenshots/app-inicio.png" width="45%" alt="Tela principal com o resumo do contrato e a tabela de pagamentos">
-  <img src="screenshots/app-relatorios.png" width="45%" alt="Tela de relatórios anteriores com busca">
+  <img src="screenshots/tela-inicio.png" width="400" alt="Tela principal com o resumo do contrato e a tabela de pagamentos">
+  <img src="screenshots/tela-relatorios.png" width="400" alt="Tela de relatórios anteriores com busca">
 </p>
 
 ## Como instalar

@@ -138,7 +138,7 @@ void main() {
 
       await expectLater(
         find.byType(MaterialApp),
-        matchesGoldenFile('../screenshots/app-inicio.png'),
+        matchesGoldenFile('../screenshots/tela-inicio.png'),
       );
 
       await tester.tap(find.byIcon(Icons.menu));
@@ -148,7 +148,7 @@ void main() {
 
       await expectLater(
         find.byType(MaterialApp),
-        matchesGoldenFile('../screenshots/app-relatorios.png'),
+        matchesGoldenFile('../screenshots/tela-relatorios.png'),
       );
     },
     skip: !gerarCapturas,
