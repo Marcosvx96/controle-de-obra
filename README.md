@@ -7,7 +7,7 @@ com coluna de assinatura em branco.
 
 ## Baixar o aplicativo
 
-➡️ **[Baixar o APK — Controle de Obra 1.0.2](https://github.com/Marcosvx96/controle-de-obra/releases/download/v1.0.2/Controle-de-Obra-v1.0.2.apk)**
+➡️ **[Baixar o APK — Controle de Obra 1.0.3](https://github.com/Marcosvx96/controle-de-obra/releases/download/v1.0.3/Controle-de-Obra-v1.0.3.apk)**
 
 Também disponível na página de releases:
 <https://github.com/Marcosvx96/controle-de-obra/releases/latest>

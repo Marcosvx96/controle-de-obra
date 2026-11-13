@@ -32,6 +32,29 @@ class CampoData extends StatefulWidget {
 }
 
 class _CampoDataState extends State<CampoData> {
+  final FocusNode _foco = FocusNode();
+
+  @override
+  void initState() {
+    super.initState();
+    _foco.addListener(_aoFocar);
+  }
+
+  @override
+  void dispose() {
+    _foco.dispose();
+    super.dispose();
+  }
+
+  /// Ao tocar no campo, seleciona a data inteira: digitar já substitui.
+  void _aoFocar() {
+    if (!_foco.hasFocus) return;
+    final texto = widget.controller.text;
+    if (texto.isEmpty) return;
+    widget.controller.selection =
+        TextSelection(baseOffset: 0, extentOffset: texto.length);
+  }
+
   DateTime get _primeira => widget.primeiraData ?? DateTime(2000);
   DateTime get _ultima => widget.ultimaData ?? DateTime(2100);
 
@@ -55,7 +78,7 @@ class _CampoDataState extends State<CampoData> {
     final data = somenteData(escolhida);
     widget.controller.value = TextEditingValue(
       text: formatarData(data),
-      selection: const TextSelection.collapsed(offset: 10),
+      selection: TextSelection.collapsed(offset: 10),
     );
     widget.onChanged(data);
   }
@@ -74,6 +97,7 @@ class _CampoDataState extends State<CampoData> {
   Widget build(BuildContext context) {
     return TextFormField(
       controller: widget.controller,
+      focusNode: _foco,
       keyboardType: TextInputType.number,
       inputFormatters: const [DataInputFormatter()],
       autofocus: widget.autofocus,
