@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 
+import '../core/data_input_formatter.dart';
 import '../core/formatadores.dart';
 import '../core/moeda_input_formatter.dart';
 import '../data/repositorio.dart';
+import 'campo_data.dart';
 import 'tema.dart';
 
 class NovoRelatorioScreen extends StatefulWidget {
@@ -18,8 +20,15 @@ class _NovoRelatorioScreenState extends State<NovoRelatorioScreen> {
   final _prestador = TextEditingController();
   final _obra = TextEditingController();
   final _valor = TextEditingController();
+  final _dataTexto = TextEditingController();
   DateTime _dataInicio = somenteData(DateTime.now());
   bool _salvando = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _dataTexto.text = formatarData(_dataInicio);
+  }
 
   @override
   void dispose() {
@@ -27,29 +36,21 @@ class _NovoRelatorioScreenState extends State<NovoRelatorioScreen> {
     _prestador.dispose();
     _obra.dispose();
     _valor.dispose();
+    _dataTexto.dispose();
     super.dispose();
-  }
-
-  Future<void> _escolherData() async {
-    final escolhida = await showDatePicker(
-      context: context,
-      initialDate: _dataInicio,
-      firstDate: DateTime(2000),
-      lastDate: DateTime(2100),
-      locale: const Locale('pt', 'BR'),
-    );
-    if (escolhida != null) setState(() => _dataInicio = escolhida);
   }
 
   Future<void> _salvar() async {
     if (!_formKey.currentState!.validate()) return;
+    final dataInicio = dataDoTexto(_dataTexto.text);
+    if (dataInicio == null) return;
     setState(() => _salvando = true);
     await Repositorio.instancia.criarRelatorio(
       contratante: _contratante.text.trim(),
       prestador: _prestador.text.trim(),
       obra: _obra.text.trim(),
       valorCentavos: centavosDoTexto(_valor.text),
-      dataInicio: _dataInicio,
+      dataInicio: dataInicio,
     );
     if (!mounted) return;
     Navigator.pop(context, true);
@@ -75,22 +76,13 @@ class _NovoRelatorioScreenState extends State<NovoRelatorioScreen> {
                 style: TextStyle(fontSize: 16, color: textoFraco),
               ),
               const SizedBox(height: 24),
-              InkWell(
-                onTap: _escolherData,
-                borderRadius: BorderRadius.circular(14),
-                child: InputDecorator(
-                  decoration: const InputDecoration(
-                    labelText: 'Data de início',
-                    suffixIcon: Icon(Icons.event_outlined, size: 26),
-                  ),
-                  child: Text(
-                    formatarData(_dataInicio),
-                    style: const TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                ),
+              CampoData(
+                label: 'Data de início',
+                controller: _dataTexto,
+                onChanged: (data) {
+                  if (data != null) _dataInicio = data;
+                },
+                negrito: true,
               ),
               const SizedBox(height: 16),
               TextFormField(

@@ -74,16 +74,16 @@ Future<void> _semear() async {
   final repo = Repositorio.instancia;
 
   await repo.criarRelatorio(
-    contratante: 'Conceição Construções',
-    prestador: 'João Ávila',
+    contratante: 'Construtora Aurora LTDA',
+    prestador: 'Carlos Eduardo Lima',
     obra: 'Pintura da fachada',
     valorCentavos: 1250000,
     dataInicio: DateTime(2026, 3, 2),
   );
 
   final atual = await repo.criarRelatorio(
-    contratante: 'Fearless Marketing LTDA',
-    prestador: 'Denrleso Calvon',
+    contratante: 'Marcenaria Bela Vista ME',
+    prestador: 'Ana Paula Souza',
     obra: 'Reforma do galpão',
     valorCentavos: 9434800,
     dataInicio: DateTime(2026, 6, 16),
@@ -138,7 +138,7 @@ void main() {
 
       await expectLater(
         find.byType(MaterialApp),
-        matchesGoldenFile('../screenshots/tela-inicio.png'),
+        matchesGoldenFile('../screenshots/tela-contrato.png'),
       );
 
       await tester.tap(find.byIcon(Icons.menu));
@@ -148,7 +148,7 @@ void main() {
 
       await expectLater(
         find.byType(MaterialApp),
-        matchesGoldenFile('../screenshots/tela-relatorios.png'),
+        matchesGoldenFile('../screenshots/tela-historico.png'),
       );
     },
     skip: !gerarCapturas,

@@ -2,11 +2,13 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 
+import '../core/data_input_formatter.dart';
 import '../core/formatadores.dart';
 import '../core/moeda_input_formatter.dart';
 import '../data/models.dart';
 import '../data/repositorio.dart';
 import '../pdf/pdf_actions.dart';
+import 'campo_data.dart';
 import 'tema.dart';
 
 class DialogoPagamento extends StatefulWidget {
@@ -26,28 +28,27 @@ class DialogoPagamento extends StatefulWidget {
 class _DialogoPagamentoState extends State<DialogoPagamento> {
   final _formKey = GlobalKey<FormState>();
   final _valor = TextEditingController();
+  final _dataTexto = TextEditingController();
   DateTime _data = somenteData(DateTime.now());
   TipoPagamento _tipo = TipoPagamento.normal;
 
   @override
-  void dispose() {
-    _valor.dispose();
-    super.dispose();
+  void initState() {
+    super.initState();
+    _dataTexto.text = formatarData(_data);
   }
 
-  Future<void> _escolherData() async {
-    final escolhida = await showDatePicker(
-      context: context,
-      initialDate: _data,
-      firstDate: DateTime(2000),
-      lastDate: DateTime(2100),
-      locale: const Locale('pt', 'BR'),
-    );
-    if (escolhida != null) setState(() => _data = escolhida);
+  @override
+  void dispose() {
+    _valor.dispose();
+    _dataTexto.dispose();
+    super.dispose();
   }
 
   Future<void> _salvar() async {
     if (!_formKey.currentState!.validate()) return;
+    final data = dataDoTexto(_dataTexto.text);
+    if (data == null) return;
     final valor = centavosDoTexto(_valor.text);
     if (widget.saldoCentavos > 0 && valor > widget.saldoCentavos) {
       final confirmar = await showDialog<bool>(
@@ -80,7 +81,7 @@ class _DialogoPagamentoState extends State<DialogoPagamento> {
         relatorioId: widget.relatorioId,
         tipo: _tipo,
         valorCentavos: valor,
-        data: _data,
+        data: data,
         criadoEm: DateTime.now(),
       ),
     );
@@ -112,22 +113,14 @@ class _DialogoPagamentoState extends State<DialogoPagamento> {
                 style: const TextStyle(fontSize: 16, color: textoFraco),
               ),
               const SizedBox(height: 20),
-              InkWell(
-                onTap: _escolherData,
-                borderRadius: BorderRadius.circular(14),
-                child: InputDecorator(
-                  decoration: const InputDecoration(
-                    labelText: 'Data do pagamento',
-                    suffixIcon: Icon(Icons.event_outlined, size: 26),
-                  ),
-                  child: Text(
-                    formatarData(_data),
-                    style: const TextStyle(
-                      fontSize: 19,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                ),
+              CampoData(
+                label: 'Data do pagamento',
+                controller: _dataTexto,
+                onChanged: (data) {
+                  if (data != null) _data = data;
+                },
+                tamanhoTexto: 19,
+                negrito: true,
               ),
               const SizedBox(height: 18),
               const _TituloCampo('Tipo do pagamento'),
@@ -228,6 +221,7 @@ class _EditarContratoDialogState extends State<EditarContratoDialog> {
   late final TextEditingController _prestador;
   late final TextEditingController _obra;
   late final TextEditingController _valor;
+  late final TextEditingController _dataTexto;
   late DateTime _dataInicio;
 
   @override
@@ -240,6 +234,7 @@ class _EditarContratoDialogState extends State<EditarContratoDialog> {
       text: formatarValorSemSimbolo(widget.relatorio.valorCentavos),
     );
     _dataInicio = widget.relatorio.dataInicio;
+    _dataTexto = TextEditingController(text: formatarData(_dataInicio));
   }
 
   @override
@@ -248,29 +243,21 @@ class _EditarContratoDialogState extends State<EditarContratoDialog> {
     _prestador.dispose();
     _obra.dispose();
     _valor.dispose();
+    _dataTexto.dispose();
     super.dispose();
-  }
-
-  Future<void> _escolherData() async {
-    final escolhida = await showDatePicker(
-      context: context,
-      initialDate: _dataInicio,
-      firstDate: DateTime(2000),
-      lastDate: DateTime(2100),
-      locale: const Locale('pt', 'BR'),
-    );
-    if (escolhida != null) setState(() => _dataInicio = escolhida);
   }
 
   Future<void> _salvar() async {
     if (!_formKey.currentState!.validate()) return;
+    final dataInicio = dataDoTexto(_dataTexto.text);
+    if (dataInicio == null) return;
     await Repositorio.instancia.atualizarRelatorio(
       widget.relatorio.copyWith(
         contratante: _contratante.text.trim(),
         prestador: _prestador.text.trim(),
         obra: _obra.text.trim(),
         valorCentavos: centavosDoTexto(_valor.text),
-        dataInicio: _dataInicio,
+        dataInicio: dataInicio,
       ),
     );
     if (!mounted) return;
@@ -323,19 +310,13 @@ class _EditarContratoDialogState extends State<EditarContratoDialog> {
                   ),
                 ),
                 const SizedBox(height: 14),
-                InkWell(
-                  onTap: _escolherData,
-                  borderRadius: BorderRadius.circular(14),
-                  child: InputDecorator(
-                    decoration: const InputDecoration(
-                      labelText: 'Data de início',
-                      suffixIcon: Icon(Icons.event_outlined),
-                    ),
-                    child: Text(
-                      formatarData(_dataInicio),
-                      style: const TextStyle(fontSize: 19),
-                    ),
-                  ),
+                CampoData(
+                  label: 'Data de início',
+                  controller: _dataTexto,
+                  onChanged: (data) {
+                    if (data != null) _dataInicio = data;
+                  },
+                  tamanhoTexto: 19,
                 ),
                 const SizedBox(height: 14),
                 TextFormField(

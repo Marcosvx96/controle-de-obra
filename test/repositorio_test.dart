@@ -16,8 +16,8 @@ void main() {
   test('cria relatório, ativa e lista do mais novo para o mais antigo',
       () async {
     final primeiro = await repositorio.criarRelatorio(
-      contratante: 'Fearless Marketing LTDA',
-      prestador: 'Denrleso Calvon',
+      contratante: 'Marcenaria Bela Vista ME',
+      prestador: 'Ana Paula Souza',
       obra: 'Reforma do galpão',
       valorCentavos: 9434800,
       dataInicio: DateTime(2026, 6, 16),
@@ -26,8 +26,8 @@ void main() {
     expect(await repositorio.buscarAtivo(), isNotNull);
 
     final segundo = await repositorio.criarRelatorio(
-      contratante: 'Conceição Construções',
-      prestador: 'João Ávila',
+      contratante: 'Construtora Aurora LTDA',
+      prestador: 'Carlos Eduardo Lima',
       obra: '',
       valorCentavos: 500000,
       dataInicio: DateTime(2026, 7, 1),
@@ -77,7 +77,7 @@ void main() {
 
     final novoAtivo = await repositorio.buscarAtivo();
     expect(novoAtivo, isNotNull);
-    expect(novoAtivo!.contratante, 'Fearless Marketing LTDA');
+    expect(novoAtivo!.contratante, 'Marcenaria Bela Vista ME');
     expect(await repositorio.listarPagamentos(ativo.id!), isEmpty,
         reason: 'os pagamentos são apagados junto');
   });

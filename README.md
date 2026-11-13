@@ -7,7 +7,7 @@ com coluna de assinatura em branco.
 
 ## Baixar o aplicativo
 
-➡️ **[Baixar o APK — Controle de Obra 1.0.1](https://github.com/Marcosvx96/controle-de-obra/releases/download/v1.0.1/Controle-de-Obra-v1.0.1.apk)**
+➡️ **[Baixar o APK — Controle de Obra 1.0.2](https://github.com/Marcosvx96/controle-de-obra/releases/download/v1.0.2/Controle-de-Obra-v1.0.2.apk)**
 
 Também disponível na página de releases:
 <https://github.com/Marcosvx96/controle-de-obra/releases/latest>
@@ -33,8 +33,8 @@ relatórios são mantidos.
 ## Telas do aplicativo
 
 <p align="center">
-  <img src="screenshots/tela-inicio.png" width="400" alt="Tela principal com o resumo do contrato e a tabela de pagamentos">
-  <img src="screenshots/tela-relatorios.png" width="400" alt="Tela de relatórios anteriores com busca">
+  <img src="screenshots/tela-contrato.png" width="400" alt="Tela principal com o resumo do contrato e a tabela de pagamentos">
+  <img src="screenshots/tela-historico.png" width="400" alt="Tela de relatórios anteriores com busca">
 </p>
 
 ## Como instalar
@@ -47,6 +47,8 @@ relatórios são mantidos.
 ## Como usar
 
 1. Toque em **CRIAR MEU PRIMEIRO RELATÓRIO** e informe data, contratante, prestador e valor.
+   Na data, digite só os números (ex.: `16062026`) que as barras entram sozinhas, ou use o
+   ícone de calendário.
 2. No dia a dia, use **ADICIONAR PAGAMENTO** para lançar cada valor recebido.
 3. Toque no lápis para corrigir qualquer dado do contrato.
 4. Use **BAIXAR PDF** para salvar, imprimir ou enviar o documento por WhatsApp.

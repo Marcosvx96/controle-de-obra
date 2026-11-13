@@ -1,4 +1,6 @@
+import 'package:controle_mao_de_obra/core/data_input_formatter.dart';
 import 'package:controle_mao_de_obra/core/formatadores.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
@@ -21,8 +23,39 @@ void main() {
     expect(dataParaBanco(DateTime(2026, 6, 9)), '2026-06-09');
   });
 
+  test('mascara a data enquanto digita', () {
+    expect(formatarDataParcial(''), '');
+    expect(formatarDataParcial('1'), '1');
+    expect(formatarDataParcial('12'), '12');
+    expect(formatarDataParcial('123'), '12/3');
+    expect(formatarDataParcial('1234'), '12/34');
+    expect(formatarDataParcial('12345'), '12/34/5');
+    expect(formatarDataParcial('16062026'), '16/06/2026');
+
+    const formatador = DataInputFormatter();
+    TextEditingValue digitar(String texto) => formatador.formatEditUpdate(
+          TextEditingValue.empty,
+          TextEditingValue(
+            text: texto,
+            selection: TextSelection.collapsed(offset: texto.length),
+          ),
+        );
+
+    expect(digitar('16062026').text, '16/06/2026');
+    expect(digitar('123456789').text, '12/34/5678');
+  });
+
+  test('lê a data digitada', () {
+    expect(dataDoTexto('16/06/2026'), DateTime(2026, 6, 16));
+    expect(dataDoTexto('29/02/2024'), DateTime(2024, 2, 29));
+    expect(dataDoTexto('31/02/2026'), isNull);
+    expect(dataDoTexto('16/06'), isNull);
+    expect(dataDoTexto('16062026'), isNull);
+    expect(dataDoTexto(''), isNull);
+  });
+
   test('normaliza acentos e maiúsculas para busca', () {
-    expect(normalizar('João ÁVILA'), 'joao avila');
+    expect(normalizar('José ÁVILA'), 'jose avila');
     expect(normalizar('Conceição'), 'conceicao');
   });
 
@@ -33,7 +66,10 @@ void main() {
   });
 
   test('limpa o nome do arquivo', () {
-    expect(nomeArquivoLimpo('Fearless Marketing LTDA'), 'fearless_marketing_ltda');
+    expect(
+      nomeArquivoLimpo('Marcenaria Bela Vista ME'),
+      'marcenaria_bela_vista_me',
+    );
     expect(nomeArquivoLimpo('Ação & Cia.'), 'acao_cia');
   });
 }

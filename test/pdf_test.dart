@@ -7,8 +7,8 @@ import 'package:flutter_test/flutter_test.dart';
 Relatorio _relatorioExemplo() {
   return Relatorio(
     id: 1,
-    contratante: 'Fearless Marketing LTDA',
-    prestador: 'Denrleso Calvon',
+    contratante: 'Marcenaria Bela Vista ME',
+    prestador: 'Ana Paula Souza',
     obra: 'Reforma do galpão',
     valorCentavos: 9434800,
     dataInicio: DateTime(2026, 6, 16),

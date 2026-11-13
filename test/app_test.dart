@@ -43,20 +43,27 @@ void main() {
     await tester.pumpAndSettle();
 
     final campos = find.byType(TextFormField);
-    await tester.enterText(campos.at(0), 'Fearless Marketing LTDA');
-    await tester.enterText(campos.at(1), 'Denrleso Calvon');
-    await tester.enterText(campos.at(2), 'Reforma do galpão');
-    await tester.enterText(campos.at(3), '9434800');
+    await tester.enterText(campos.at(0), '16062026');
+    await tester.enterText(campos.at(1), 'Marcenaria Bela Vista ME');
+    await tester.enterText(campos.at(2), 'Ana Paula Souza');
+    await tester.enterText(campos.at(3), 'Reforma do galpão');
+    await tester.enterText(campos.at(4), '9434800');
     await tester.pump();
+
+    // A máscara precisa colocar as barras sozinha.
+    expect(find.text('16/06/2026'), findsOneWidget);
 
     await tester.tap(find.text('SALVAR E ABRIR'));
     await assentar(tester);
 
-    expect(find.text('Fearless Marketing LTDA'), findsOneWidget);
+    expect(find.text('Marcenaria Bela Vista ME'), findsOneWidget);
+    expect(find.text('Início em 16/06/2026'), findsOneWidget);
     expect(find.text('R\$ 94.348,00'), findsWidgets);
     expect(
       tester
-          .renderObject<RenderParagraph>(find.text('Fearless Marketing LTDA'))
+          .renderObject<RenderParagraph>(
+            find.text('Marcenaria Bela Vista ME'),
+          )
           .text
           .style
           ?.color,
