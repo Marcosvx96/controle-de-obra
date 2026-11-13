@@ -1,5 +1,6 @@
 import 'dart:typed_data';
 
+import 'package:flutter/services.dart' show rootBundle;
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 
@@ -8,12 +9,27 @@ import '../data/models.dart';
 
 /// Gera o PDF no formato de contrato impresso (A4 retrato).
 class PdfService {
+  static pw.Font? _fonteRegular;
+  static pw.Font? _fonteNegrito;
+
   static final PdfColor _azul = PdfColor.fromInt(0xFF0F3D5C);
   static final PdfColor _cinza = PdfColor.fromInt(0xFFEDF1F4);
   static final PdfColor _borda = PdfColor.fromInt(0xFF9AA7B2);
   static final PdfColor _verde = PdfColor.fromInt(0xFF1E7A46);
   static final PdfColor _laranja = PdfColor.fromInt(0xFFB45309);
   static final PdfColor _fraco = PdfColor.fromInt(0xFF4A5966);
+
+  /// Fonte com acentos (o Helvetica padrão do PDF não aceita acentuação).
+  static Future<pw.ThemeData> _tema() async {
+    _fonteRegular ??=
+        pw.Font.ttf(await rootBundle.load('assets/fonts/NotoSans-Regular.ttf'));
+    _fonteNegrito ??=
+        pw.Font.ttf(await rootBundle.load('assets/fonts/NotoSans-Bold.ttf'));
+    return pw.ThemeData.withFont(
+      base: _fonteRegular,
+      bold: _fonteNegrito,
+    );
+  }
 
   static String nomeArquivo(Relatorio relatorio) {
     final data = formatarData(relatorio.dataInicio).replaceAll('/', '-');
@@ -35,9 +51,12 @@ class PdfService {
       creator: 'Controle de Pagamento de Mão de Obra',
     );
 
+    final tema = await _tema();
+
     documento.addPage(
       pw.MultiPage(
         pageFormat: PdfPageFormat.a4,
+        theme: tema,
         margin: const pw.EdgeInsets.fromLTRB(34, 30, 34, 34),
         header: (contexto) => contexto.pageNumber == 1
             ? pw.SizedBox.shrink()

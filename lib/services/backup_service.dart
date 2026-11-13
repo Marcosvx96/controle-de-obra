@@ -18,26 +18,24 @@ class BackupService {
     await arquivo.writeAsString(
       const JsonEncoder.withIndent('  ').convert(dados),
     );
-    await Share.shareXFiles(
-      [XFile(arquivo.path, mimeType: 'application/json')],
-      subject: 'Backup do Controle de Pagamento',
-      text: 'Backup dos relatórios do Controle de Pagamento de Mão de Obra.',
+    await SharePlus.instance.share(
+      ShareParams(
+        files: [XFile(arquivo.path, mimeType: 'application/json')],
+        subject: 'Backup do Controle de Pagamento',
+        text: 'Backup dos relatórios do Controle de Pagamento de Mão de Obra.',
+      ),
     );
   }
 
   /// Abre o seletor de arquivos e devolve o conteúdo do backup.
   static Future<Map<String, dynamic>?> escolherBackup() async {
-    final resultado = await FilePicker.platform.pickFiles(
+    final arquivo = await FilePicker.pickFile(
       type: FileType.custom,
       allowedExtensions: ['json'],
-      withData: true,
+      dialogTitle: 'Escolha o arquivo de backup',
     );
-    if (resultado == null || resultado.files.isEmpty) return null;
-    final arquivo = resultado.files.first;
-    final bytes = arquivo.bytes;
-    final texto = bytes != null
-        ? utf8.decode(bytes)
-        : await File(arquivo.path!).readAsString();
+    if (arquivo == null) return null;
+    final texto = utf8.decode(await arquivo.readAsBytes());
     final dados = jsonDecode(texto);
     if (dados is! Map<String, dynamic>) {
       throw const FormatException('Arquivo de backup inválido.');

@@ -16,8 +16,8 @@ dependencies:
   path_provider: ^2.1.5
   pdf: ^3.11.1
   printing: ^5.13.2
-  share_plus: ^10.1.0
-  file_picker: ^8.1.2
+  share_plus: ^13.3.1
+  file_picker: ^13.3.3
 
 dev_dependencies:
   flutter_test:
@@ -29,6 +29,7 @@ flutter:
   uses-material-design: true
   assets:
     - assets/icon/
+    - assets/fonts/
 
 flutter_launcher_icons:
   android: true

@@ -40,6 +40,8 @@ List<Pagamento> _pagamentosExemplo() {
 }
 
 void main() {
+  TestWidgetsFlutterBinding.ensureInitialized();
+
   test('gera o PDF do contrato com todos os pagamentos', () async {
     final bytes = await PdfService.gerar(
       relatorio: _relatorioExemplo(),
