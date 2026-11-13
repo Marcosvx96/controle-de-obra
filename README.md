@@ -1,8 +1,19 @@
-# Controle de Pagamento de Mão de Obra
+# Controle de Obra
 
-Aplicativo Android (`.apk`) para controlar pagamentos de mão de obra, substituindo o
-caderno de papel. Funciona **offline**, guarda todos os relatórios no próprio celular e
-gera um **PDF com o layout de contrato impresso**, com coluna de assinatura em branco.
+**Controle de Pagamento de Mão de Obra** — aplicativo Android (`.apk`) para controlar
+pagamentos de mão de obra, substituindo o caderno de papel. Funciona **offline**, guarda
+todos os relatórios no próprio celular e gera um **PDF com o layout de contrato impresso**,
+com coluna de assinatura em branco.
+
+## Baixar o aplicativo
+
+➡️ **[Baixar o APK — Controle de Obra 1.0.0](https://github.com/Marcosvx96/controle-de-obra/releases/download/v1.0.0/Controle-de-Obra-v1.0.0.apk)**
+
+Também disponível na página de releases:
+<https://github.com/Marcosvx96/controle-de-obra/releases/latest>
+
+Requisito: **Android 7.0 ou superior**. Instale por cima de versões anteriores — os
+relatórios são mantidos.
 
 ## O que o app faz
 
@@ -23,13 +34,10 @@ gera um **PDF com o layout de contrato impresso**, com coluna de assinatura em b
 
 ## Como instalar
 
-1. Baixe o arquivo `app-release.apk` na aba **Actions → Gerar APK** (artefato
-   `apk-release`) ou em **Releases**.
+1. Baixe o APK no link acima (ou na aba **Releases**).
 2. No celular, abra o arquivo e permita "instalar de fontes desconhecidas" quando o
    Android pedir.
 3. Pronto: o app abre sem precisar de internet.
-
-Requisito: Android 7.0 ou superior.
 
 ## Como usar
 
@@ -49,25 +57,23 @@ lib/
   pdf/         geração do PDF e ações de salvar/compartilhar
   services/    backup (exportar/restaurar)
   ui/          telas, diálogos, tema e componentes
-test/          testes de formatação e geração do PDF
+test/          testes de formatação, geração do PDF, banco e telas
 ```
 
 - Banco local: **SQLite** (`sqflite`), arquivo `controle_mao_de_obra.db`.
 - Valores são guardados em **centavos** (inteiro), sem erro de arredondamento.
 - Um único relatório fica marcado como **ativo**; o anterior continua salvo na lista.
+- Escrito em **Flutter** (Material 3), com fontes Noto Sans embutidas no PDF.
 
 ## Como compilar
 
-O APK final é gerado localmente com o Flutter instalado nesta máquina e publicado em
-**Releases** no GitHub (`v1.0.0`).
-
-Para compilar:
+O APK é gerado localmente e publicado em **Releases**.
 
 ```bash
 flutter pub get
 dart run flutter_launcher_icons
 flutter test
-flutter build apk --release
+flutter build apk --release --target-platform android-arm,android-arm64
 ```
 
 O APK fica em `build/app/outputs/flutter-apk/app-release.apk` (uma cópia é guardada em
